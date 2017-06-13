@@ -1,0 +1,21 @@
+.pointer {
+	cursor: pointer;
+}
+.bg-lightgrey {
+	background-color: #fafafa;
+}
+
+
+
+.space-top-20 {
+	margin-top: 20px;
+}
+.space-bottom-20 {
+	margin-bottom: 20px;
+}
+.space-top-40 {
+	margin-top: 40px;
+}
+.space-bottom-40 {
+	margin-bottom: 40px;
+}

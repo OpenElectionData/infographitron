@@ -1,0 +1,30 @@
+.space-top-20 {
+	margin-top: 20px;
+}
+.space-bottom-20 {
+	margin-bottom: 20px;
+}
+.space-top-40 {
+	margin-top: 40px;
+}
+.space-bottom-40 {
+	margin-bottom: 40px;
+}
+.lightgrey-bg {
+	background-color: #f8f8f8;
+}
+
+.customInfographicFormContainer {
+	text-align:right;
+	margin-bottom:20px;
+}
+.customInfographicForm {
+	display:inline-block;
+	margin-left: 10px;
+}
+
+span.label {
+	font-size:85%;
+	margin-right:5px;
+	display:inline-block;
+}
