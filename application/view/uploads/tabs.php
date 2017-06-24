@@ -1,4 +1,6 @@
 <div class="container">
+	<?php $this->renderFeedbackMessages(); ?>
+	
 	<ul class="nav nav-tabs" style="margin-bottom:20px">
 		<li role='presentation'<?php if ($this->page == "backgrounds") { echo ' class="active" '; } ?>>
 			<a href="<?php echo Config::get('URL'); ?>uploader/backgrounds">

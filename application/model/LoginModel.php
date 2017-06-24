@@ -18,6 +18,7 @@ class LoginModel
      */
     public static function login($user_name, $user_password, $set_remember_me_cookie = null)
     {
+        $login = array();
         // we do negative-first checks here, for simplicity empty username and empty password in one line
         if (empty($user_name) OR empty($user_password)) {
             Session::add('feedback_negative', Text::get('FEEDBACK_USERNAME_OR_PASSWORD_FIELD_EMPTY'));
@@ -28,8 +29,17 @@ class LoginModel
 	    $result = self::validateAndGetUser($user_name, $user_password);
 
 	    if (!$result) {
-		    return false;
+            $login['result'] = false;
+            return $login;
 	    }
+
+        $userHasInfographics = self::checkIfUserHasInfographics($result->user_id);
+        if($userHasInfographics) {
+            $login['hasInfographics'] = true;
+        }
+        else {
+            Session::add('feedback_positive', Text::get('FEEDBACK_FIRST_TIME_USER'));
+        }
 
         // reset the failed login counter for that user (if necessary)
         if ($result->user_last_failed_login > 0) {
@@ -51,7 +61,8 @@ class LoginModel
 
         // return true to make clear the login was successful
         // maybe do this in dependence of setSuccessfulLoginIntoSession ?
-        return true;
+        $login['result'] = true;
+        return $login;
     }
 
 	/**
@@ -266,5 +277,22 @@ class LoginModel
     public static function isUserLoggedIn()
     {
         return Session::userIsLoggedIn();
+    }
+
+    public static function checkIfUserHasInfographics($user_id) {
+        $database = DatabaseFactory::getFactory()->getConnection();
+
+        // write that token into database
+        $sql = "SELECT info_id FROM infographics WHERE user_id = :user_id LIMIT 1";
+        $query = $database->prepare($sql);
+        $query->execute(array(':user_id' => $user_id));
+
+        if ($query->rowCount() > 0) {
+          return true;
+        } else {
+           return false;
+        }
+
+
     }
 }

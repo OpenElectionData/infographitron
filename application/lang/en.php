@@ -184,6 +184,8 @@ return array(
 	"FEEDBACK_INFOGRAPHIC_CREATION_FAILED" => "Infographic creation failed.",
 	"FEEDBACK_INFOGRAPHIC_EDITING_FAILED" => "Infographic editing failed.",
 	"FEEDBACK_INFOGRAPHIC_DELETION_FAILED" => "Infographic deletion failed.",
+
+	"FEEDBACK_FIRST_TIME_USER" => "You are a first time user! This is some instructional text for how to use the Infographitron."
 		
 );
 ?>

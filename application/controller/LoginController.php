@@ -40,8 +40,11 @@ class LoginController extends Controller
         );
 
         // check login status: if true, then redirect user login/showProfile, if false, then to login form again
-        if ($login_successful) {
+        if ($login_successful['result'] && isset($login_successful['hasInfographics'])) {
             Redirect::to('login/showProfile');
+        }
+        elseif($login_successful['result']) {
+            Redirect::to('uploader/index');
         } else {
             Redirect::to('login/index');
         }
