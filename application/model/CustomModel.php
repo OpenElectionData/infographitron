@@ -46,7 +46,7 @@ class CustomModel
 	public static function trackStepProgress($query, $step = 1)
 	{
 		if(isset($query['id']) || isset($query['f_n'])) {
-			if(isset($query['g']) && $query['g'][0] != "") {
+			if(isset($query['g']) && isset($query['g'][0]) && $query['g'][0] != "") {
 				$step = 3;
 			}
 			elseif(isset($query['b'])) {
@@ -96,7 +96,7 @@ class CustomModel
     {
         $database = DatabaseFactory::getFactory()->getConnection();
 
-        $sql = "SELECT info_id, user_id, url, name, created_date, edited_date FROM infographics WHERE user_id = :user_id";
+        $sql = "SELECT info_id, user_id, url, name, created_date, edited_date, approval_state FROM infographics WHERE user_id = :user_id";
         $query = $database->prepare($sql);
         $query->execute(array(':user_id' => Session::get('user_id')));
 
@@ -113,7 +113,7 @@ class CustomModel
     {
         $database = DatabaseFactory::getFactory()->getConnection();
 
-        $sql = "SELECT info_id, user_id, url, name, created_date, edited_date FROM infographics WHERE info_id = :info_id LIMIT 1";
+        $sql = "SELECT info_id, user_id, url, name, created_date, edited_date, approval_state FROM infographics WHERE info_id = :info_id LIMIT 1";
         $query = $database->prepare($sql);
         $query->execute(array(':info_id' => $info_id));
 
@@ -138,7 +138,7 @@ class CustomModel
 
         $database = DatabaseFactory::getFactory()->getConnection();
 
-        $sql = "INSERT INTO infographics (url, user_id, name, created_date, edited_date) VALUES (:url, :user_id, :name, :dateFormatted, :dateFormatted)";
+        $sql = "INSERT INTO infographics (url, user_id, name, created_date, edited_date, approval_state) VALUES (:url, :user_id, :name, :dateFormatted, :dateFormatted, 'pending')";
         $query = $database->prepare($sql);
         $query->execute(array(':url' => $url, ':user_id' => Session::get('user_id'), ':name' => $name, ':dateFormatted' => $date));
 
@@ -152,9 +152,9 @@ class CustomModel
     }
 
     /**
-     * Update an existing note
-     * @param int $info_id id of the specific note
-     * @param string $url new text of the specific note
+     * Update an existing infographic
+     * @param int $info_id id of the specific infographic
+     * @param string $url new text of the specific infographic
      * @return bool feedback (was the update successful ?)
      */
     public static function updateInfographic($info_id, $url, $name)
@@ -267,5 +267,39 @@ class CustomModel
         // default return
         Session::add('feedback_negative', Text::get('FEEDBACK_NOTE_DELETION_FAILED'));
         return false;
+    }
+
+    /**
+     * Get default template
+     * @return object a single object (the result)
+     */
+    public static function bulkEdit($selectedInfographics, $action)
+    {
+        if (!$selectedInfographics || !$action) {
+            return false;
+        }
+
+        // The selected infographics to update
+        $selectedInfographicIDs = implode(",",$selectedInfographics);
+
+
+        // Updating approval state
+        if($action == "approve") {
+            $state = "approved";
+        }
+        elseif($action == "deny") {
+            $state = "denied";
+        }
+        elseif($action == "pending") {
+            $state = "pending";
+        }
+
+        $database = DatabaseFactory::getFactory()->getConnection();
+
+        $sql = "UPDATE infographics SET `approval_state` = :state WHERE info_id IN (".$selectedInfographicIDs.")";
+        $query = $database->prepare($sql);
+        $query->execute(array(':state' => $state));
+
+        return true;
     }
 }

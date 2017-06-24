@@ -73,7 +73,7 @@ return array(
 	"cant_process_file" => "Can't process file.",
 	"cant_connect" => "Can't connect.",
 	"download" => "Download",
-	"customize" => "Customize",
+	"edit" => "Edit",
 	"download_all_graphics" => "Download all graphics",
 
 	"step1_select_a_background" => "<strong>Step 1:</strong> Select a background image.",

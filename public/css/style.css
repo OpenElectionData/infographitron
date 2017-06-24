@@ -28,3 +28,7 @@ span.label {
 	margin-right:5px;
 	display:inline-block;
 }
+
+.footer {
+	height: 100px;
+}

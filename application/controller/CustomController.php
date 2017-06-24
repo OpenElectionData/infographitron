@@ -113,4 +113,14 @@ class CustomController extends Controller
         Redirect::to('login/showProfile');
     }
 
+    /**
+     * Edits the infographics in bulk
+     * POST request.
+     */
+    public function bulkEdit()
+    {
+        CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
+        Redirect::to('profile/infographics');
+    }
+
 }
