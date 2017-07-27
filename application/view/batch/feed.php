@@ -128,7 +128,7 @@ echo "<div class=\"container\">";
 									$query.="&t_f[".$i_t."]=".$value."";
 								}
 								if($p==3) {
-									$query.="&t_c[".$i_t."]=".$value."";
+									$query.="&t_c[".$i_t."]=".str_replace("#","",$value)."";
 								}
 								if($p==4) {
 									$query.="&t_s[".$i_t."]=".$value."";

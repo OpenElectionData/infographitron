@@ -44,10 +44,13 @@
                             <div class="panel-footer">
                                 <button type="button" class="btn <?php echo $buttonClass; ?> btn-xs"><?php echo ucfirst($value->approval_state); ?></button>
                                 <?php if($value->approval_state == "approved") { ?>
-                                <a href="<?php echo Config::get('URL')."infographic/showInfographic?".$value->url; ?>" role="button" class="btn btn-default btn-xs" style="margin-left:10px;"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> <?php echo TEXT::get("download"); ?></a>
+                                <a href="<?php echo Config::get('URL')."infographic/showInfographic?".$value->url; ?>" role="button" class="btn btn-default btn-xs" style="margin-left:5px;"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span> <?php echo TEXT::get("download"); ?></a>
                                 <?php } ?>
-                                <a href="<?php echo Config::get('URL')."custom/?id=".$value->info_id; ?>" role="button" class="btn btn-default btn-xs" style="margin-left:10px;"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <?php echo TEXT::get("edit"); ?></a>
-                                <a href="<?php echo Config::get('URL')."custom/delete?id=".$value->info_id; ?>" role="button" class="btn btn-danger btn-xs" style="margin-left:10px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <?php echo TEXT::get("delete"); ?></a>
+                                <?php if($value->approval_state == "approved") { ?>
+                                <a href="<?php echo Config::get('URL')."infographic/downloadCSV?".$value->url; ?>" role="button" class="btn btn-default btn-xs" style="margin-left:5px;"><span class="glyphicon glyphicon-download" aria-hidden="true"></span> <?php echo TEXT::get("CSV"); ?></a>
+                                <?php } ?>
+                                <a href="<?php echo Config::get('URL')."custom/?id=".$value->info_id; ?>" role="button" class="btn btn-default btn-xs" style="margin-left:5px;"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> <?php echo TEXT::get("edit"); ?></a>
+                                <a href="<?php echo Config::get('URL')."custom/delete?id=".$value->info_id; ?>" role="button" class="btn btn-danger btn-xs" style="margin-left:5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> <?php echo TEXT::get("delete"); ?></a>
                             </div>
                         </div>
                     </div>

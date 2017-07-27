@@ -22,7 +22,6 @@ class Infographics
         $graphics = $this->getGraphics();
         $fonts = $this->getFonts();
 
-
 	    if(isset($arguments['b']) && $backgrounds[$arguments["b"]]!="") {
 			$b=$arguments["b"];
 		} else {
@@ -59,6 +58,7 @@ class Infographics
 						$t_f[$id]="./uploads/fonts/arial.ttf";
 					}
 					if($arguments["t_c"][$id]!="") {
+
 						$c="";
 						$c= $this->hex2RGB($arguments["t_c"][$id]);
 						if(is_array($c)) {
@@ -139,6 +139,7 @@ class Infographics
 								$i_t=0;
 								$type = false;
 								foreach(array_slice($row, 2) as $id=>$value) {
+									error_log($value);
 									if($type==false) {
 										if($value==1) {
 											$type=1;

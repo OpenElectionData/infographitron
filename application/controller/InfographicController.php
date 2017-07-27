@@ -37,4 +37,15 @@ class InfographicController extends Controller
 
         InfographicModel::zipInfographics($filename, $firstline);
     }
+
+    /**
+     * Download infographic in a CSV file
+     * @return file CSV File
+     */
+    public function downloadCSV()
+    {
+        $url = $_SERVER['QUERY_STRING'];
+        $query = explode("&",$url, 2);
+        InfographicModel::downloadCSV($query[1]);
+    }
 }

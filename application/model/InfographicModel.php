@@ -86,4 +86,42 @@ class InfographicModel
         // fetch() is the PDO method that gets a single result
         return $query->fetchAll();
 	}
+
+	/**
+	 * Download infographic in CSV template
+	 * @param  array $query URL of infographic
+	 * @return file        CSV file
+	 */
+	public static function downloadCSV($query)
+	{
+		parse_str($query, $arguments);
+		// echo "<pre>";
+		// print_r($arguments);
+		// echo "</pre>";
+
+		$header_row = array("Name", "Background");
+		$content_row = array($arguments['f_n'], $arguments['b']);
+		if(isset($arguments['g'])) {
+			$graphicsCount = count($arguments['g']) - 1;
+			for($i = 0; $i <= $graphicsCount; $i++) {
+				array_push($header_row, "Type", "Image", "X", "Y");
+				array_push($content_row, "1", $arguments['g'][$i], $arguments['g_x'][$i], $arguments['g_y'][$i]);
+			}
+		}
+
+		if(isset($arguments['t'])) {
+			$textCount = count($arguments['t']) - 1;
+			for($i = 0; $i <= $textCount; $i++) {
+				array_push($header_row, "Type", "Text", "Font", "Color", "Size", "X", "Y");
+				array_push($content_row, "2", $arguments['t'][$i], $arguments['t_f'][$i], $arguments['t_c'][$i], $arguments['t_s'][$i], $arguments['t_x'][$i], $arguments['t_y'][$i]);
+			}
+		}
+
+		$output = fopen("php://output",'w') or die("Can't open php://output");
+		header("Content-Type:application/csv"); 
+		header("Content-Disposition:attachment;filename=pressurecsv.csv"); 
+		fputcsv($output, $header_row);
+		fputcsv($output, $content_row);
+		fclose($output) or die("Can't close php://output");
+	}
 }

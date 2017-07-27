@@ -73,6 +73,7 @@ return array(
 	"cant_process_file" => "Can't process file.",
 	"cant_connect" => "Can't connect.",
 	"download" => "Download",
+	"CSV" => "CSV",
 	"edit" => "Edit",
 	"download_all_graphics" => "Download all graphics",
 
