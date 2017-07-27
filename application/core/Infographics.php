@@ -22,7 +22,7 @@ class Infographics
         $graphics = $this->getGraphics();
         $fonts = $this->getFonts();
 
-	    
+
 	    if(isset($arguments['b']) && $backgrounds[$arguments["b"]]!="") {
 			$b=$arguments["b"];
 		} else {

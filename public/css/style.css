@@ -32,3 +32,9 @@ span.label {
 .footer {
 	height: 100px;
 }
+
+.make-main {
+	position: sticky;
+	position: -webkit-sticky;
+	top: 20px;
+}
