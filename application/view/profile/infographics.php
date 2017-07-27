@@ -61,6 +61,7 @@
                   <option value="approve">Approve</option>
                   <option value="deny">Deny</option>
                   <option value="pending">Pending</option>
+                  <option value="bulkCSV">Download CSV</option>
                 </select>
                 <button type='submit' class='btn btn-primary'>Submit</button>
             </div>

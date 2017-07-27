@@ -119,8 +119,14 @@ class CustomController extends Controller
      */
     public function bulkEdit()
     {
-        CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
-        Redirect::to('profile/infographics');
+        if(Request::post('action') == 'bulkCSV') {
+            $urls = CustomModel::getSpecificInfographicURLs(Request::post('selectedInfographics'), Request::post('action'));
+            InfographicModel::downloadCSVBulk($urls);
+        }
+        else {
+            CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
+        }
+        // Redirect::to('profile/infographics');
     }
 
 }

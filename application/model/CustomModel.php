@@ -122,6 +122,22 @@ class CustomModel
     }
 
     /**
+     * Get a infographics based on list of IDs
+     * @param int $info_ids IDs of infographics
+     * @return object a single object (the result)
+     */
+    public static function getSpecificInfographicURLs($info_ids)
+    {
+        $database = DatabaseFactory::getFactory()->getConnection();
+
+        $sql = "SELECT info_id, url FROM infographics WHERE info_id IN (:info_ids) AND user_id = :user_id";
+        $query = $database->prepare($sql);
+        $query->execute(array(':info_ids' => implode(",",$info_ids), ':user_id' => Session::get('user_id')));
+
+        return $query->fetchAll();
+    }
+
+    /**
      * Set a infographic (create a new one)
      * @param string $url URL that will be stored
      * @return bool feedback (was the note created properly ?)
