@@ -125,8 +125,8 @@ class CustomController extends Controller
         }
         else {
             CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
+            Redirect::to('profile/infographics');
         }
-        // Redirect::to('profile/infographics');
     }
 
 }

@@ -129,10 +129,15 @@ class CustomModel
     public static function getSpecificInfographicURLs($info_ids)
     {
         $database = DatabaseFactory::getFactory()->getConnection();
+        $inQuery = implode(',', array_fill(0, count($info_ids), '?'));
 
-        $sql = "SELECT info_id, url FROM infographics WHERE info_id IN (:info_ids) AND user_id = :user_id";
+        $sql = "SELECT info_id, url FROM infographics WHERE info_id IN (".$inQuery.") AND user_id = ?";
         $query = $database->prepare($sql);
-        $query->execute(array(':info_ids' => implode(",",$info_ids), ':user_id' => Session::get('user_id')));
+
+        $queryVals = $info_ids;
+        $queryVals[] = Session::get('user_id');
+
+        $query->execute($queryVals);
 
         return $query->fetchAll();
     }
