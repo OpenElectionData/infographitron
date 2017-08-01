@@ -71,106 +71,42 @@ echo "<div class=\"container\">";
 	
 <?php
 	if(Request::post("submit")!="") {
-		$handle = @fopen("tmp/".$tmp_filename,"r");
-		if($handle!==false) {
-			$i=0;
-			$csv=array();
-			while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-				$csv[$i]=$data;
-				$i++;
-			}
-			fclose($handle);
-			//echo "<pre>"; print_r($csv); echo "</pre>";
-			if(is_array($csv)) {
-				if (class_exists("ZipArchive")) {
-					echo "<div class=\"text-right\" style=\"margin-bottom:20px;\">";
-						echo "<a href=\"".Config::get('URL')."infographic/zip?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> ".TEXT::get("download_all_graphics")."</a>";
-					echo "</div>";
-				}
-				$n=0;
-				$p=0;
-				$query="";
-				foreach($csv as $n=>$row) {
-					if($firstline!="ignore" || $n>0) {
-						$query="f_n=".$row[0]."&b=".$row[1];
-						$i_g=0;
-						$i_t=0;
-						$type = false;
-						foreach(array_slice($row, 2) as $id=>$value) {
-							if($type==false) {
-								if($value==1) {
-									$type=1;
-								}
-								if($value==2) {
-									$type=2;
-								}
-								$p=0;
-							}
-							if($type==1) {
-								if($p==1) {
-									$query.="&g[".$i_g."]=".$value."";
-								}
-								if($p==2) {
-									$query.="&g_x[".$i_g."]=".$value."";
-								}
-								if($p==3) {
-									$query.="&g_y[".$i_g."]=".$value."";
-									$type=false;
-									$i_g++;
-								}
-								$p++;
-							}
-							if($type==2) {
-								if($p==1) {
-									$query.="&t[".$i_t."]=".$value."";
-								}
-								if($p==2) {
-									$query.="&t_f[".$i_t."]=".$value."";
-								}
-								if($p==3) {
-									$query.="&t_c[".$i_t."]=".str_replace("#","",$value)."";
-								}
-								if($p==4) {
-									$query.="&t_s[".$i_t."]=".$value."";
-								}
-								if($p==5) {
-									$query.="&t_x[".$i_t."]=".$value."";
-								}
-								if($p==6) {
-									$query.="&t_y[".$i_t."]=".$value."";
-									$type=false;
-									$i_t++;
-								}
-								$p++;
-							}
-						}
-						//echo $query;
-						echo "<div class=\"panel panel-default\">";
-							echo "<div class=\"panel-body\">";
-								echo "<div class=\"row\">";
-									echo "<div class=\"col-md-6\">";
-										echo "<p><strong>".$row[0]."</strong></p>";
-									echo "</div>";
-									echo "<div class=\"col-md-6 text-right\">";
-										echo "<a href=\"".Config::get('URL')."infographic/showInfographic?".$query."\" role=\"button\" class=\"btn btn-default btn-xs\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span> ".TEXT::get("download")."</a>";
-										echo "<a href=\"".Config::get('URL')."/custom/?".$query."\" role=\"button\" class=\"btn btn-default btn-xs\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-cog\" aria-hidden=\"true\"></span> ".TEXT::get("customize")."</a>";
-									echo "</div>";
-								echo "</div>";
-								echo "<img style=\"width:600px;height:600px\" alt=\"\" src=\"".Config::get('URL')."infographic/showInfographic?".$query."\">";
+
+		$infographics = new Infographics;
+        $graphics = $infographics->readTmpFile($tmp_filename, $firstline);
+
+        if(isset($graphics) && !empty($graphics) && class_exists("ZipArchive")) {
+			echo "<div class=\"text-right\" style=\"margin-bottom:20px;\">";
+				echo "<a href=\"".Config::get('URL')."infographic/zip?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-picture\" aria-hidden=\"true\"></span> ".TEXT::get("download_all_graphics")."</a>";
+				echo "<a href=\"".Config::get('URL')."infographic/saveBulk?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> ".TEXT::get("save_all_graphics")."</a>";
+			echo "</div>";
+
+			foreach($graphics as $graphic) {
+				echo "<div class=\"panel panel-default\">";
+					echo "<div class=\"panel-body\">";
+						echo "<div class=\"row\">";
+							echo "<div class=\"col-md-6\">";
+								echo "<p><strong>".$graphic['name']."</strong></p>";
+							echo "</div>";
+							echo "<div class=\"col-md-6 text-right\">";
+								echo "<a href=\"".Config::get('URL')."infographic/showInfographic?".$graphic['url']."\" role=\"button\" class=\"btn btn-default btn-xs\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-download\" aria-hidden=\"true\"></span> ".TEXT::get("download")."</a>";
+								echo "<a href=\"".Config::get('URL')."/custom/?".$graphic['url']."\" role=\"button\" class=\"btn btn-default btn-xs\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-cog\" aria-hidden=\"true\"></span> ".TEXT::get("customize")."</a>";
 							echo "</div>";
 						echo "</div>";
-					}
-				}
-				if (class_exists("ZipArchive")) {
-					echo "<div class=\"text-right\" style=\"margin-top:20px;\">";
-						echo "<a href=\"".Config::get('URL')."infographic/zip?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> ".TEXT::get("download_all_graphics")."</a>";
+						echo "<img style=\"width:600px;height:600px\" alt=\"\" src=\"".Config::get('URL')."infographic/showInfographic?".$graphic['url']."\">";
 					echo "</div>";
-				}
+				echo "</div>";
 			}
-		} else{
-			echo "<div class=\"alert alert-danger\" role=\"alert\">".TEXT::get("cant_connect")."</div>";
-		}
-	}
+
+			echo "<div class=\"text-right\" style=\"margin-bottom:20px;\">";
+				echo "<a href=\"".Config::get('URL')."infographic/zip?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-picture\" aria-hidden=\"true\"></span> ".TEXT::get("download_all_graphics")."</a>";
+				echo "<a href=\"".Config::get('URL')."infographic/saveBulk?filename=".$tmp_filename."&firstline=".$firstline."\" role=\"button\" class=\"btn btn-default btn\" style=\"margin-left:10px;\"><span class=\"glyphicon glyphicon-save\" aria-hidden=\"true\"></span> ".TEXT::get("save_all_graphics")."</a>";
+			echo "</div>";
+        } 
+        else {
+        	echo "<div class=\"alert alert-danger\" role=\"alert\">".TEXT::get("cant_process_file")."</div>";
+        }
+    }
 
 echo "</div>";
 

@@ -139,7 +139,6 @@ class Infographics
 								$i_t=0;
 								$type = false;
 								foreach(array_slice($row, 2) as $id=>$value) {
-									error_log($value);
 									if($type==false) {
 										if($value==1) {
 											$type=1;
@@ -289,6 +288,94 @@ class Infographics
 			return false;
 		}
 		return $returnAsString ? implode($seperator, $rgbArray) : $rgbArray;
+	}
+
+	public function readTmpFile($filename, $firstline) {
+		if(file_exists("tmp/".$filename)) {
+			$handle = @fopen("tmp/".$filename,"r");
+			if($handle!==false) {
+				$i=0;
+				$csv=array();
+				while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+					$csv[$i]=$data;
+					$i++;
+				}
+				fclose($handle);
+				
+				$queries = array();
+
+				if(is_array($csv)) {
+					$n=0;
+					$p=0;
+					$query="";
+					foreach($csv as $n=>$row) {
+						if($firstline!="ignore" || $n>0) {
+							$query="f_n=".urlencode($row[0])."&b=".$row[1];
+							$i_g=0;
+							$i_t=0;
+							$type = false;
+							foreach(array_slice($row, 2) as $id=>$value) {
+								if($type==false) {
+									if($value==1) {
+										$type=1;
+									}
+									if($value==2) {
+										$type=2;
+									}
+									$p=0;
+								}
+								if($type==1) {
+									if($p==1) {
+										$query.="&g[".$i_g."]=".$value."";
+									}
+									if($p==2) {
+										$query.="&g_x[".$i_g."]=".$value."";
+									}
+									if($p==3) {
+										$query.="&g_y[".$i_g."]=".$value."";
+										$type=false;
+										$i_g++;
+									}
+									$p++;
+								}
+								if($type==2) {
+									if($p==1) {
+										$query.="&t[".$i_t."]=".urlencode($value)."";
+									}
+									if($p==2) {
+										$query.="&t_f[".$i_t."]=".$value."";
+									}
+									if($p==3) {
+										$query.="&t_c[".$i_t."]=".str_replace("#","",$value)."";
+									}
+									if($p==4) {
+										$query.="&t_s[".$i_t."]=".$value."";
+									}
+									if($p==5) {
+										$query.="&t_x[".$i_t."]=".$value."";
+									}
+									if($p==6) {
+										$query.="&t_y[".$i_t."]=".$value."";
+										$type=false;
+										$i_t++;
+									}
+									$p++;
+								}
+							}
+							$queries[] = array("url" => $query, "name" => $row[0]);
+						}
+					}
+				}
+
+				return $queries;
+			} else {
+				echo "File read error.";
+				// return "File read error.";
+			}
+		} else {
+			echo "File does not excist.";
+			// return "File does not exist";
+		}
 	}
 
 }

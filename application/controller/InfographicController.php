@@ -48,4 +48,15 @@ class InfographicController extends Controller
         $query = explode("&",$url, 2);
         InfographicModel::downloadCSV($query[1]);
     }
+
+    /**
+     * Save infographics in bulk
+     */
+    public function saveBulk()
+    {
+        $filename = Request::get('filename');
+        $firstline = Request::get('firstline');
+        CustomModel::createBulk($filename, $firstline);
+        Redirect::to('profile/infographics');
+    }
 }

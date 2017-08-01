@@ -76,6 +76,7 @@ return array(
 	"CSV" => "CSV",
 	"edit" => "Edit",
 	"download_all_graphics" => "Download all graphics",
+	"save_all_graphics" => "Save all graphics",
 
 	"step1_select_a_background" => "<strong>Step 1:</strong> Select a background image.",
 	"step2_add_a_graphic" => "<strong>Step 2:</strong> Add a graphic.",

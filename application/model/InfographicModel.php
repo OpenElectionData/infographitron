@@ -120,7 +120,7 @@ class InfographicModel
 
 		$output = fopen("php://output",'w') or die("Can't open php://output");
 		header("Content-Type:application/csv"); 
-		header("Content-Disposition:attachment;filename=pressurecsv.csv"); 
+		header("Content-Disposition:attachment;filename=infographics.csv"); 
 		fputcsv($output, $header_row);
 		fputcsv($output, $content_row);
 		fclose($output) or die("Can't close php://output");
@@ -195,7 +195,7 @@ class InfographicModel
 
 		$output = fopen("php://output",'w') or die("Can't open php://output");
 		header("Content-Type:application/csv"); 
-		header("Content-Disposition:attachment;filename=pressurecsv.csv"); 
+		header("Content-Disposition:attachment;filename=infographics.csv"); 
 		fputcsv($output, $header_row);
 		
 		foreach($contents as $content) {

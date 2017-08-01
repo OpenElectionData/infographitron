@@ -172,6 +172,41 @@ class CustomModel
         return false;
     }
 
+    public static function createBulk($filename, $firstline) {
+        $infographics = new Infographics;
+        $graphics = $infographics->readTmpFile($filename, $firstline);
+
+        if(isset($graphics)) {
+            $datafields = array('url', 'user_id', 'name', 'created_date', 'edited_date', 'approval_state');
+            $data = array();
+            $date = date("Y-m-d H:i:s", time());
+            foreach($graphics as $graphic) {
+                $data[] = array("url" => $graphic['url'], "user_id" => Session::get("user_id"), "name" => $graphic['name'], "created_date" => $date, "edited_date" => $date, "approval_state" => "pending");
+            }
+
+            $database = DatabaseFactory::getFactory()->getConnection();
+
+            $database->beginTransaction(); // also helps speed up your inserts.
+            $insert_values = array();
+            foreach($data as $d){
+                $question_marks[] = '('  . DatabaseFactory::placeholders('?', sizeof($d)) . ')';
+                $insert_values = array_merge($insert_values, array_values($d));
+            }
+
+            $sql = "INSERT INTO infographics(" . implode(",", $datafields ) . ") VALUES " . implode(',', $question_marks);
+
+            $stmt = $database->prepare ($sql);
+            try {
+                $stmt->execute($insert_values);
+            } catch (PDOException $e){
+                echo $e->getMessage();
+            }
+            $database->commit();
+        }
+
+        return true;
+    }
+
     /**
      * Update an existing infographic
      * @param int $info_id id of the specific infographic
