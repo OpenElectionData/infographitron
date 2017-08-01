@@ -123,6 +123,10 @@ class CustomController extends Controller
             $urls = CustomModel::getSpecificInfographicURLs(Request::post('selectedInfographics'), Request::post('action'));
             InfographicModel::downloadCSVBulk($urls);
         }
+        elseif(Request::post('action') == 'delete') {
+            CustomModel::bulkDelete(Request::post('selectedInfographics'), Request::post('action'));
+            Redirect::to('profile/infographics');
+        }
         else {
             CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
             Redirect::to('profile/infographics');

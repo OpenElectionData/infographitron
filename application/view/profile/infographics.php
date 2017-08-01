@@ -27,8 +27,6 @@
                             break;
                     } 
 
-
-
                 ?>
                     <div class="col-xs-12 col-md-4">
                         <div class="panel panel-default <?php echo $panelClass; ?>">
@@ -61,6 +59,7 @@
                   <option value="approve">Approve</option>
                   <option value="deny">Deny</option>
                   <option value="pending">Pending</option>
+                  <option value="delete">Delete</option>
                   <option value="bulkCSV">Download CSV</option>
                 </select>
                 <button type='submit' class='btn btn-primary'>Submit</button>

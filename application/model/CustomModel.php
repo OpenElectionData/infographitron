@@ -326,7 +326,7 @@ class CustomModel
     }
 
     /**
-     * Get default template
+     * Bulk Edit: Update status of graphics in bulk
      * @return object a single object (the result)
      */
     public static function bulkEdit($selectedInfographics, $action)
@@ -352,9 +352,31 @@ class CustomModel
 
         $database = DatabaseFactory::getFactory()->getConnection();
 
-        $sql = "UPDATE infographics SET `approval_state` = :state WHERE info_id IN (".$selectedInfographicIDs.")";
+        $sql = "UPDATE infographics SET `approval_state` = :state WHERE info_id IN (".$selectedInfographicIDs.") AND user_id = :user_id";
         $query = $database->prepare($sql);
-        $query->execute(array(':state' => $state));
+        $query->execute(array(':state' => $state, ':user_id' => Session::get('user_id')));
+
+        return true;
+    }
+
+    /**
+     * Delete: Bulk delete graphics
+     * @return object a single object (the result)
+     */
+    public static function bulkDelete($selectedInfographics, $action)
+    {
+        if (!$selectedInfographics || !$action) {
+            return false;
+        }
+
+        // The selected infographics to update
+        $selectedInfographicIDs = implode(",",$selectedInfographics);
+
+        $database = DatabaseFactory::getFactory()->getConnection();
+
+        $sql = "DELETE FROM infographics WHERE info_id IN (".$selectedInfographicIDs.") AND user_id = :user_id";
+        $query = $database->prepare($sql);
+        $query->execute(array(':user_id' => Session::get('user_id')));
 
         return true;
     }
