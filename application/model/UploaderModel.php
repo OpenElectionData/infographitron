@@ -33,13 +33,13 @@ class UploaderModel
 	  return $text;
 	}
 
-	public static function uploadAsset($filename, $assetType, $permissions, $tags) {
+	public static function uploadAsset($filename, $assetType, $permissions, $tags = null) {
 
 		$safeFilename = UploaderModel::slugify($filename);
 		$safeFilename = time().'-'.$safeFilename;
 
 		if($assetType == "fonts") {
-			$uploaddir = Config::get('PATH_ASSETS')."fonts";
+			$uploaddir = Config::get('PATH_ASSETS')."fonts/";
 			$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 
 			if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
@@ -90,7 +90,7 @@ class UploaderModel
 		}
 	}
 
-	private static function saveAssetDB($assetType, $filename, $asset, $permissions, $tags) {
+	private static function saveAssetDB($assetType, $filename, $asset, $permissions, $tags = null) {
 
 		// Format Dates
         $date = date("Y-m-d H:i:s", time());
