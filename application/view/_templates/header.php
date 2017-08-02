@@ -44,9 +44,9 @@
                     <li <?php if (View::checkForActiveController($filename, "index")) { echo ' class="active" '; } ?> >
                 <a href="<?php echo Config::get('URL'); ?>index/index">Index</a>
             </li>
-            <li <?php if (View::checkForActiveController($filename, "overview")) { echo ' class="active" '; } ?> >
+            <!-- <li <?php if (View::checkForActiveController($filename, "overview")) { echo ' class="active" '; } ?> >
                 <a href="<?php echo Config::get('URL'); ?>profile/index">Profiles</a>
-            </li>
+            </li> -->
             <?php if (Session::userIsLoggedIn()) { ?>
                 <li <?php if (View::checkForActiveController($filename, "uploads")) { echo ' class="active" '; } ?> >
                     <a href="<?php echo Config::get('URL'); ?>uploader/index">
@@ -70,7 +70,7 @@
                         <li>
                             <a href="<?php echo Config::get('URL'); ?>login/showProfile">Profile</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="<?php echo Config::get('URL'); ?>login/changeUserRole">Change account type</a>
                         </li>
                         <li>
@@ -79,7 +79,7 @@
                         <li>
                             <a href="<?php echo Config::get('URL'); ?>login/edituseremail">Change Email</a>
                         </li>
-                        <li role="separator" class="divider"></li>
+                        <li role="separator" class="divider"></li> -->
                         <li>
                             <a href="<?php echo Config::get('URL'); ?>login/logout">Logout</a>
                         </li>

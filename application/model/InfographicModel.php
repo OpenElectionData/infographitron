@@ -79,7 +79,7 @@ class InfographicModel
 	public static function getFonts() {
 		$database = DatabaseFactory::getFactory()->getConnection();
 
-        $sql = "SELECT asset_id, type, title, file, uploaded_by, viewable_by, created_date FROM assets WHERE type='fonts' AND viewable_by IN (-1, :user_id)";
+        $sql = "SELECT asset_id, type, title, file, preview, uploaded_by, viewable_by, created_date FROM assets WHERE type='fonts' AND viewable_by IN (-1, :user_id)";
         $query = $database->prepare($sql);
         $query->execute(array(':user_id' => Session::get('user_id')));
 

@@ -38,3 +38,6 @@ span.label {
 	position: -webkit-sticky;
 	top: 20px;
 }
+
+.thumbnail h4 {margin: 0;}
+.thumbnail .btn {float:right;}
