@@ -107,7 +107,14 @@ class UploaderController extends Controller
             }
             $_FILES['file'] = $file;
 
-            UploaderModel::uploadAsset($filename, Request::post('assetType'), $permissions, $tags, $_FILES['preview']);
+            if(isset($_FILES['preview'])) {
+                $preview = $_FILES['preview'];
+            }
+            else {
+                $preview = null;
+            }
+
+            UploaderModel::uploadAsset($filename, Request::post('assetType'), $permissions, $tags, $preview);
 
         }
         
