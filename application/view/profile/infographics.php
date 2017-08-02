@@ -8,7 +8,8 @@
         <?php if ($this->infographics) { ?>
         <form method="post" action="<?php echo Config::get('URL');?>custom/bulkEdit">
             <div class="row">
-                <?php 
+                <?php
+                $counter = 0; 
                 foreach($this->infographics as $key => $value) {
 
                     switch($value->approval_state) {
@@ -25,6 +26,10 @@
                             $panelClass = "panel-warning";
                             $buttonClass = "btn-warning";
                             break;
+                    }
+
+                    if($counter % 3 == 0) {
+                        echo '</div><div class="row">';
                     } 
 
                 ?>
@@ -52,7 +57,9 @@
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                <?php 
+                $counter++;
+                } ?>
             </div>
             <div class="row col-xs-12 pull-right text-right">
                 <select class="form-control" name="action" style="display:inline-block;width:auto;">

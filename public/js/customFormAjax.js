@@ -33,7 +33,7 @@ $(document).ready(function(){
                             "<div class='row'>"+
                                 "<div class='col-md-9'>"+
                                     "<input type='hidden' name='g["+item+"]' value='"+urlArray['g['+item+']']+"' />"+
-                                    "<img class='img-responsive center-block' src='/uploads/graphics/"+urlArray['g['+item+']']+"' alt='"+urlArray['g['+item+']']+"' title='"+urlArray['g['+item+']']+"' />"+
+                                    "<img class='img-responsive center-block' src='/infographitron2/uploads/graphics/"+urlArray['g['+item+']']+"' alt='"+urlArray['g['+item+']']+"' title='"+urlArray['g['+item+']']+"' />"+
                                 "</div><div class='col-md-3'>"+
                                     "<a role='button' class='btn btn-danger btn-xs deleteGraphic' data-graphic-id='"+item+"'><span class='glyphicon glyphicon-remove' aria=hidden='true'></span></a>"+
                                 "</div>"+
@@ -168,15 +168,15 @@ $(document).ready(function(){
 
             // Update the image being rendered
             if($('#imgContainer img').length) {
-                $('#imgContainer img').attr('src', '/infographic/showInfographic?'+serializedData);
+                $('#imgContainer img').attr('src', '/infographitron2/infographic/showInfographic?'+serializedData);
             }
             else {
-                $('#imgContainer').html('<img class="img-responsive center-block" style="width:600px;height:600px" src="/infographic/showInfographic?'+serializedData+'" />');
+                $('#imgContainer').html('<img class="img-responsive center-block" style="width:600px;height:600px" src="/infographitron2/infographic/showInfographic?'+serializedData+'" />');
             }
 
             // Update URL input & download link
             $("input[name='url']").val(serializedData);
-            $(".downloadLink").attr('src', '/infographic/showInfographic?'+serializedData);
+            $(".downloadLink").attr('src', '/infographitron2/infographic/showInfographic?'+serializedData);
 
             // Update infographic title
             $("input[name='f_n']").val($("#f_n").val());

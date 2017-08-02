@@ -190,7 +190,7 @@ return array(
 	"FEEDBACK_ASSET_DELETION_FAILED" => "The deletion of this asset failed.",
 	"FEEDBACK_INFOGRAPHIC_DELETION_FAILED" => "Infographic deletion failed.",
 
-	"FEEDBACK_FIRST_TIME_USER" => "You are a first time user! This is some instructional text for how to use the Infographitron."
+	"FEEDBACK_FIRST_TIME_USER" => "Welcome to the Infographitron! To create your first infographic, upload a custom background and graphics. You can also upload a custom font. You can also choose from our public gallery of graphics. When you have uploaded all of your graphics, click on the \"Make\" tab to create your first infographic."
 		
 );
 ?>

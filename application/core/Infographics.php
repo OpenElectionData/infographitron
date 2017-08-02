@@ -134,7 +134,7 @@ class Infographics
 						$query="";
 						foreach($csv as $n=>$row) {
 							if($firstline!="ignore" || $n>0) {
-								$query="f_n=".$row[0]."&b=".$row[1];
+								$query="f_n=".urlencode($row[0])."&b=".$row[1];
 								$i_g=0;
 								$i_t=0;
 								$type = false;
