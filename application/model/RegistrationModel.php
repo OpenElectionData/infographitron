@@ -22,6 +22,10 @@ class RegistrationModel
 		$user_email = strip_tags(Request::post('user_email'));
 		$user_password_new = Request::post('user_password_new');
 		$user_password_repeat = Request::post('user_password_repeat');
+		$user_language = strip_tags(Request::post('user_language'));
+		$user_organization = strip_tags(Request::post('user_organization'));
+		$user_facebook = strip_tags(Request::post('user_facebook'));
+		$user_twitter = strip_tags(Request::post('user_twitter'));
 
 		// stop registration flow if registrationInputValidation() returns false (= anything breaks the input check rules)
 		$validation_result = RegistrationModel::registrationInputValidation(Request::post('captcha'), $user_name, $user_password_new, $user_password_repeat, $user_email);
@@ -49,7 +53,7 @@ class RegistrationModel
 		$user_activation_hash = sha1(uniqid(mt_rand(), true));
 
 		// write user data to database
-		if (!RegistrationModel::writeNewUserToDatabase($user_name, $user_password_hash, $user_email, time(), $user_activation_hash)) {
+		if (!RegistrationModel::writeNewUserToDatabase($user_name, $user_password_hash, $user_email, time(), $user_activation_hash, $user_language, $user_organization, $user_facebook, $user_twitter)) {
 			Session::add('feedback_negative', Text::get('FEEDBACK_ACCOUNT_CREATION_FAILED'));
 		}
 
@@ -185,20 +189,25 @@ class RegistrationModel
 	 *
 	 * @return bool
 	 */
-	public static function writeNewUserToDatabase($user_name, $user_password_hash, $user_email, $user_creation_timestamp, $user_activation_hash)
+	public static function writeNewUserToDatabase($user_name, $user_password_hash, $user_email, $user_creation_timestamp, $user_activation_hash, $user_language, $user_organization, $user_facebook, $user_twitter)
 	{
 		$database = DatabaseFactory::getFactory()->getConnection();
 
 		// write new users data into database
-		$sql = "INSERT INTO users (user_name, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type)
-                    VALUES (:user_name, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type)";
+		$sql = "INSERT INTO users (user_name, user_password_hash, user_email, user_creation_timestamp, user_activation_hash, user_provider_type, user_language, user_organization, user_facebook, user_twitter)
+                    VALUES (:user_name, :user_password_hash, :user_email, :user_creation_timestamp, :user_activation_hash, :user_provider_type, :user_language, :user_organization, :user_facebook, :user_twitter)";
 		$query = $database->prepare($sql);
 		$query->execute(array(':user_name' => $user_name,
 		                      ':user_password_hash' => $user_password_hash,
 		                      ':user_email' => $user_email,
 		                      ':user_creation_timestamp' => $user_creation_timestamp,
 		                      ':user_activation_hash' => $user_activation_hash,
-		                      ':user_provider_type' => 'DEFAULT'));
+		                      ':user_provider_type' => 'DEFAULT',
+		                      ':user_language' => $user_language,
+		                      ':user_organization' => $user_organization,
+		                      ':user_facebook' => $user_organization,
+		                      ':user_twitter' => $user_twitter
+		                      ));
 		$count =  $query->rowCount();
 		if ($count == 1) {
 			return true;

@@ -54,6 +54,7 @@ return array(
 	"help_file_graphic" => "Supported formats: PNG, JPG, GIF.",
 	"help_file_font" => "Supported formats: TTF, OTF.",
 	"help_filename" => "Maximum length: 255 characters.",
+	"help_preview" => "Preview image of the font. Supported formats: PNG, JPG, GIF.",
 	"help_feed" => "Download <a href=\"/infographitron/uploads/misc/template.csv\">CSV template</a>.",
 	"submit" => "Submit",
 	"file_tags" => "Tags",
@@ -73,8 +74,10 @@ return array(
 	"cant_process_file" => "Can't process file.",
 	"cant_connect" => "Can't connect.",
 	"download" => "Download",
-	"customize" => "Customize",
+	"CSV" => "CSV",
+	"edit" => "Edit",
 	"download_all_graphics" => "Download all graphics",
+	"save_all_graphics" => "Save all graphics",
 
 	"step1_select_a_background" => "<strong>Step 1:</strong> Select a background image.",
 	"step2_add_a_graphic" => "<strong>Step 2:</strong> Add a graphic.",
@@ -183,7 +186,11 @@ return array(
 	"FEEDBACK_INFOGRAPHIC_CREATION_SUCCEEDED" => "Infographic creation succeeded.",
 	"FEEDBACK_INFOGRAPHIC_CREATION_FAILED" => "Infographic creation failed.",
 	"FEEDBACK_INFOGRAPHIC_EDITING_FAILED" => "Infographic editing failed.",
+	"FEEDBACK_ASSET_DELETION_SUCCEEDED" => "Asset has been successfully deleted. This asset will continue to be used by existing infographics, but will not be available for new graphics.",
+	"FEEDBACK_ASSET_DELETION_FAILED" => "The deletion of this asset failed.",
 	"FEEDBACK_INFOGRAPHIC_DELETION_FAILED" => "Infographic deletion failed.",
+
+	"FEEDBACK_FIRST_TIME_USER" => "You are a first time user! This is some instructional text for how to use the Infographitron."
 		
 );
 ?>

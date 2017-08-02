@@ -113,4 +113,24 @@ class CustomController extends Controller
         Redirect::to('login/showProfile');
     }
 
+    /**
+     * Edits the infographics in bulk
+     * POST request.
+     */
+    public function bulkEdit()
+    {
+        if(Request::post('action') == 'bulkCSV') {
+            $urls = CustomModel::getSpecificInfographicURLs(Request::post('selectedInfographics'), Request::post('action'));
+            InfographicModel::downloadCSVBulk($urls);
+        }
+        elseif(Request::post('action') == 'delete') {
+            CustomModel::bulkDelete(Request::post('selectedInfographics'), Request::post('action'));
+            Redirect::to('profile/infographics');
+        }
+        else {
+            CustomModel::bulkEdit(Request::post('selectedInfographics'), Request::post('action'));
+            Redirect::to('profile/infographics');
+        }
+    }
+
 }

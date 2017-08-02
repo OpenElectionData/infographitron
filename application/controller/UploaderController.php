@@ -107,10 +107,18 @@ class UploaderController extends Controller
             }
             $_FILES['file'] = $file;
 
-            UploaderModel::uploadAsset($filename, Request::post('assetType'), $permissions, $tags);
+            UploaderModel::uploadAsset($filename, Request::post('assetType'), $permissions, $tags, $_FILES['preview']);
 
         }
         
         Redirect::to('uploader/'.Request::post('assetType'));
+    }
+
+    /**
+     * Delete an asset
+     */
+    public function delete() {
+        UploaderModel::deleteAsset(Request::get('id'));
+        Redirect::to('uploader/index');
     }
 }

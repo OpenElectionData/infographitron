@@ -28,3 +28,16 @@ span.label {
 	margin-right:5px;
 	display:inline-block;
 }
+
+.footer {
+	height: 100px;
+}
+
+.make-main {
+	position: sticky;
+	position: -webkit-sticky;
+	top: 20px;
+}
+
+.thumbnail h4 {margin: 0;}
+.thumbnail .btn {float:right;}

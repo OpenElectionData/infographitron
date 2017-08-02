@@ -31,15 +31,22 @@
 						<input type="text" class="form-control filename" id="filename" placeholder="" name="filename[]">
 						<p class="help-block small"><?php echo TEXT::get("help_filename"); ?></p>
 					</div>
+					<?php if($this->page == "fonts") { ?>
+					<div class="form-group">
+						<label for="preview"><?php echo TEXT::get("preview"); ?></label>
+						<input type="file" id="preview" name="preview">
+						<p class="help-block small"><?php echo TEXT::get("help_preview"); ?></p>
+					</div>
+					<?php } ?>
 					<?php if($this->page == "graphics") { ?>
-						<div class="form-group">
-							<label for="tags"><?php echo TEXT::get("file_tags"); ?></label><br />
-							<?php foreach($this->tags as $tag) { ?>
-								<label class="checkbox-inline">
-							  		<input type="checkbox" name="tags[][]" class="tags" value="<?php echo $tag; ?>"> <?php echo $tag; ?>
-								</label>
-							<?php } ?>
-						</div>
+					<div class="form-group">
+						<label for="tags"><?php echo TEXT::get("file_tags"); ?></label><br />
+						<?php foreach($this->tags as $tag) { ?>
+							<label class="checkbox-inline">
+						  		<input type="checkbox" name="tags[][]" class="tags" value="<?php echo $tag; ?>"> <?php echo $tag; ?>
+							</label>
+						<?php } ?>
+					</div>
 					<?php } ?>
 					<div class="form-group">
 						<label for="permissions"><?php echo TEXT::get("permissions"); ?></label>

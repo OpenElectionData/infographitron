@@ -66,7 +66,7 @@ if($g_xy == true) {
 echo "<div class=\"container\">";
 	echo "<div class=\"row\">";
 		echo "<div class=\"col-sm-3\">";
-			echo "<form id='foo'>";
+			echo '<form id="make-submit">';
 				// Hidden inputs for background image
 				echo "<input type='hidden' name='b' value='".$b."' />";
 			
@@ -256,7 +256,7 @@ echo "<div class=\"container\">";
 			echo "</div>";
 			echo "</form>";
 		echo "</div>";
-		echo "<div class=\"col-sm-9\">";
+		echo '<div class="col-sm-9 make-main">';
 				switch($this->step) {
 					case 1;
 						echo "<div class=\"alert alert-info\" role=\"alert\">".TEXT::get("step1_select_a_background")."</div>";

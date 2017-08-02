@@ -33,7 +33,7 @@ $(document).ready(function(){
                             "<div class='row'>"+
                                 "<div class='col-md-9'>"+
                                     "<input type='hidden' name='g["+item+"]' value='"+urlArray['g['+item+']']+"' />"+
-                                    "<img class='img-responsive center-block' src='http://oediblog.loc/infographitron2/uploads/graphics/"+urlArray['g['+item+']']+"' alt='"+urlArray['g['+item+']']+"' title='"+urlArray['g['+item+']']+"' />"+
+                                    "<img class='img-responsive center-block' src='/uploads/graphics/"+urlArray['g['+item+']']+"' alt='"+urlArray['g['+item+']']+"' title='"+urlArray['g['+item+']']+"' />"+
                                 "</div><div class='col-md-3'>"+
                                     "<a role='button' class='btn btn-danger btn-xs deleteGraphic' data-graphic-id='"+item+"'><span class='glyphicon glyphicon-remove' aria=hidden='true'></span></a>"+
                                 "</div>"+
@@ -73,7 +73,7 @@ $(document).ready(function(){
     $('#collapse-step3').on('click', '.deleteGraphic', function(){
         var value = $(this).data('graphic-id');
         $('#graphic'+value).remove();
-        $('#foo').submit();
+        $('#make-submit').submit();
     });
 
     // Submit the form when we click on a background image or a graphic
@@ -84,12 +84,12 @@ $(document).ready(function(){
         }
         else if($(this).data('graphic-id')) {
             var value = $(this).data('graphic-id');
-            $('#foo').append("<input type='hidden' name='g["+graphicsCount+"]' value='"+value+"' />");
-            $('#foo').append("<input type='hidden' name='g_x["+graphicsCount+"]' value='150' />");
-            $('#foo').append("<input type='hidden' name='g_y["+graphicsCount+"]' value='225' />");
+            $('#make-submit').append("<input type='hidden' name='g["+graphicsCount+"]' value='"+value+"' />");
+            $('#make-submit').append("<input type='hidden' name='g_x["+graphicsCount+"]' value='150' />");
+            $('#make-submit').append("<input type='hidden' name='g_y["+graphicsCount+"]' value='225' />");
             graphicsCount++;
         }
-        $('#foo').submit();
+        $('#make-submit').submit();
     });
 
     // Add new text line
@@ -128,7 +128,7 @@ $(document).ready(function(){
     var request;
 
     // Bind to the submit event of our form
-    $("#foo").submit(function(event){
+    $("#make-submit").submit(function(event){
 
         // Prevent default posting of form - put here to work in case of errors
         event.preventDefault();
@@ -168,15 +168,15 @@ $(document).ready(function(){
 
             // Update the image being rendered
             if($('#imgContainer img').length) {
-                $('#imgContainer img').attr('src', 'http://oediblog.loc/infographitron2/infographic/showInfographic?'+serializedData);
+                $('#imgContainer img').attr('src', '/infographic/showInfographic?'+serializedData);
             }
             else {
-                $('#imgContainer').html('<img class="img-responsive center-block" style="width:600px;height:600px" src="http://oediblog.loc/infographitron2/infographic/showInfographic?'+serializedData+'" />');
+                $('#imgContainer').html('<img class="img-responsive center-block" style="width:600px;height:600px" src="/infographic/showInfographic?'+serializedData+'" />');
             }
 
             // Update URL input & download link
             $("input[name='url']").val(serializedData);
-            $(".downloadLink").attr('src', 'http://oediblog.loc/infographitron2/infographic/showInfographic?'+serializedData);
+            $(".downloadLink").attr('src', '/infographic/showInfographic?'+serializedData);
 
             // Update infographic title
             $("input[name='f_n']").val($("#f_n").val());
