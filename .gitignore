@@ -4,3 +4,4 @@
 /application/config/config.development.php
 /application/config/config.production.php
 /public/tmp/
+/public/uploads/*
